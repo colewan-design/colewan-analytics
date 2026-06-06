@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -18,9 +17,7 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
-        $expected = config('analytics.admin_password');
-
-        if (Hash::check($data['password'], $expected) || $data['password'] === $expected) {
+        if ($data['password'] === config('analytics.admin_password')) {
             $request->session()->put('analytics_admin', true);
             return redirect()->route('dashboard.index');
         }
