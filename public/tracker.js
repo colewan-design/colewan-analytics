@@ -30,8 +30,35 @@
     } catch (e) {}
   }
 
+  function sendBeacon(endpoint, payload) {
+    var url = api + '/api/' + endpoint;
+    try {
+      var sent = navigator.sendBeacon(url, new Blob([JSON.stringify(payload)], { type: 'application/json' }));
+      if (!sent) send(endpoint, payload);
+    } catch (e) {
+      send(endpoint, payload);
+    }
+  }
+
+  // ---------- Duration tracking ----------
+  var currentViewId  = null;
+  var pageStartTime  = null;
+
+  function sendDuration() {
+    if (!currentViewId || !pageStartTime) return;
+    var seconds = Math.round((Date.now() - pageStartTime) / 1000);
+    if (seconds < 1) return;
+    sendBeacon('track/duration', { view_id: currentViewId, duration: seconds });
+    currentViewId = null;
+    pageStartTime = null;
+  }
+
   // ---------- Page View ----------
   function trackPageview() {
+    sendDuration(); // flush previous page duration before tracking new one
+
+    pageStartTime = Date.now();
+
     send('track/pageview', {
       tracking_id: id,
       session_id:  getSession(),
@@ -42,13 +69,34 @@
       screen_h:    screen.height,
       language:    navigator.language || null,
     });
+
+    // Retrieve view_id from response to use when sending duration
+    var url = api + '/api/track/pageview';
+    fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        tracking_id: id,
+        session_id:  getSession(),
+        url:         location.href,
+        title:       document.title || null,
+        referrer:    document.referrer || null,
+        screen_w:    screen.width,
+        screen_h:    screen.height,
+        language:    navigator.language || null,
+      }),
+      keepalive: true,
+    }).then(function (res) {
+      return res.json();
+    }).then(function (data) {
+      if (data.view_id) currentViewId = data.view_id;
+    }).catch(function () {});
   }
 
   // ---------- Click ----------
   function trackClick(e) {
     var el = e.target;
 
-    // Walk up to find the meaningful element (link, button, input)
     var depth = 0;
     while (el && el !== document.body && depth < 5) {
       var tag = (el.tagName || '').toLowerCase();
@@ -78,7 +126,7 @@
     });
   }
 
-  // ---------- SPA support (history navigation) ----------
+  // ---------- SPA navigation ----------
   function onNavigation() {
     setTimeout(function () {
       trackPageview();
@@ -86,15 +134,45 @@
   }
 
   // ---------- Init ----------
+  function init() {
+    pageStartTime = Date.now();
+
+    var url = api + '/api/track/pageview';
+    fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        tracking_id: id,
+        session_id:  getSession(),
+        url:         location.href,
+        title:       document.title || null,
+        referrer:    document.referrer || null,
+        screen_w:    screen.width,
+        screen_h:    screen.height,
+        language:    navigator.language || null,
+      }),
+      keepalive: true,
+    }).then(function (res) { return res.json(); })
+      .then(function (data) { if (data.view_id) currentViewId = data.view_id; })
+      .catch(function () {});
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', trackPageview);
+    document.addEventListener('DOMContentLoaded', init);
   } else {
-    trackPageview();
+    init();
   }
 
   document.addEventListener('click', trackClick, true);
 
-  // Intercept pushState / replaceState for SPA frameworks
+  // Send duration when tab is hidden or closed
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden') sendDuration();
+  });
+
+  window.addEventListener('pagehide', sendDuration);
+
+  // SPA support
   var _push = history.pushState;
   var _replace = history.replaceState;
   history.pushState = function () {

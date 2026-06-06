@@ -8,6 +8,7 @@ use App\Models\AnalyticsSite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 use Jenssegers\Agent\Agent;
 
 class TrackingController extends Controller
@@ -29,11 +30,13 @@ class TrackingController extends Controller
             return response()->json(['error' => 'Invalid tracking ID'], 403);
         }
 
-        $ip   = $request->ip();
-        $geo  = $this->geoip($ip);
-        $ua   = $this->parseUserAgent($request->userAgent());
+        $ip    = $request->ip();
+        $geo   = $this->geoip($ip);
+        $ua    = $this->parseUserAgent($request->userAgent());
+        $viewId = (string) Str::uuid();
 
         AnalyticsPageview::create([
+            'view_id'         => $viewId,
             'tracking_id'     => $data['tracking_id'],
             'session_id'      => $data['session_id'],
             'url'             => $data['url'],
@@ -53,6 +56,20 @@ class TrackingController extends Controller
             'language'        => $data['language'] ?? null,
             'created_at'      => now(),
         ]);
+
+        return response()->json(['ok' => true, 'view_id' => $viewId]);
+    }
+
+    public function duration(Request $request)
+    {
+        $data = $request->validate([
+            'view_id'  => 'required|string|max:36',
+            'duration' => 'required|integer|min:1|max:86400',
+        ]);
+
+        AnalyticsPageview::where('view_id', $data['view_id'])
+            ->whereNull('duration')
+            ->update(['duration' => $data['duration']]);
 
         return response()->json(['ok' => true]);
     }
