@@ -7,17 +7,16 @@
     $secs    = (int) round($avgDuration ?? 0);
     $durFmt  = $secs >= 60 ? floor($secs / 60) . 'm ' . ($secs % 60) . 's' : ($secs > 0 ? $secs . 's' : '—');
 
-    // Shared helper: reach badge HTML
-    function reachBadge(?int $pct, bool $invertBad = false): string {
+    $reachBadge = function(?int $pct, bool $invertBad = false): string {
         if ($pct === null) return '<span class="text-xs text-gray-400">No prior data</span>';
-        $up      = $invertBad ? $pct <= 0 : $pct >= 0;
-        $arrow   = $pct >= 0 ? '↗' : '↘';
-        $color   = $up ? 'text-green-700 bg-green-100' : 'text-red-600 bg-red-100';
-        $label   = $pct >= 0 ? 'Reach up' : 'Reach down';
+        $up    = $invertBad ? $pct <= 0 : $pct >= 0;
+        $arrow = $pct >= 0 ? '↗' : '↘';
+        $color = $up ? 'text-green-700 bg-green-100' : 'text-red-600 bg-red-100';
+        $label = $pct >= 0 ? 'Reach up' : 'Reach down';
         return '<span class="text-xs text-gray-500 mr-1">' . $label . '</span>'
              . '<span class="inline-flex items-center gap-0.5 text-xs font-semibold px-2 py-0.5 rounded-full ' . $color . '">'
              . $arrow . ' ' . abs($pct) . '%</span>';
-    }
+    };
 @endphp
 
 @section('content')
@@ -125,7 +124,7 @@
                 <svg class="w-4 h-4 text-gray-300 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
             </div>
             <div class="flex items-center gap-1 mb-3 text-xs">
-                {!! reachBadge($viewsChange) !!}
+                {!! $reachBadge($viewsChange) !!}
             </div>
             <div class="flex items-baseline gap-4">
                 <div><span class="text-2xl font-bold text-gray-900">{{ number_format($totalViews) }}</span><span class="text-xs text-gray-400 ml-1">Views</span></div>
@@ -147,7 +146,7 @@
                 <svg class="w-4 h-4 text-gray-300 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
             </div>
             <div class="flex items-center gap-1 mb-3 text-xs">
-                {!! reachBadge($durationChange) !!}
+                {!! $reachBadge($durationChange) !!}
             </div>
             <div class="flex items-baseline gap-4">
                 <div><span class="text-2xl font-bold text-gray-900">{{ $durFmt }}</span><span class="text-xs text-gray-400 ml-1">Avg</span></div>
@@ -169,7 +168,7 @@
             </div>
             <div class="flex items-center gap-1 mb-3 text-xs">
                 {{-- Higher bounce = worse, so invert --}}
-                {!! reachBadge($bounceChange, true) !!}
+                {!! $reachBadge($bounceChange, true) !!}
             </div>
             <div class="flex items-baseline gap-4">
                 <div><span class="text-2xl font-bold text-gray-900">{{ $bounceRate }}%</span><span class="text-xs text-gray-400 ml-1">Rate</span></div>
@@ -191,7 +190,7 @@
                 <svg class="w-4 h-4 text-gray-300 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
             </div>
             <div class="flex items-center gap-1 mb-3 text-xs">
-                {!! reachBadge($clicksChange) !!}
+                {!! $reachBadge($clicksChange) !!}
             </div>
             <div class="flex items-baseline gap-4">
                 <div><span class="text-2xl font-bold text-gray-900">{{ number_format($totalClicks) }}</span><span class="text-xs text-gray-400 ml-1">Total</span></div>
