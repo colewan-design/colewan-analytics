@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AnalyticsClick;
+use App\Models\AnalyticsFeedback;
 use App\Models\AnalyticsPageview;
 use App\Models\AnalyticsSite;
 use Illuminate\Http\Request;
@@ -105,6 +106,33 @@ class TrackingController extends Controller
             'x_pos'         => $data['x'] ?? null,
             'y_pos'         => $data['y'] ?? null,
             'created_at'    => now(),
+        ]);
+
+        return response()->json(['ok' => true]);
+    }
+
+    public function feedback(Request $request)
+    {
+        $data = $request->validate([
+            'tracking_id' => 'required|string|size:32',
+            'session_id'  => 'nullable|string|max:64',
+            'page_url'    => 'required|url|max:2000',
+            'rating'      => 'required|integer|min:1|max:3',
+            'comment'     => 'nullable|string|max:500',
+        ]);
+
+        if (!AnalyticsSite::where('tracking_id', $data['tracking_id'])->exists()) {
+            return response()->json(['error' => 'Invalid tracking ID'], 403);
+        }
+
+        AnalyticsFeedback::create([
+            'tracking_id' => $data['tracking_id'],
+            'session_id'  => $data['session_id'] ?? null,
+            'page_url'    => $data['page_url'],
+            'rating'      => $data['rating'],
+            'comment'     => $data['comment'] ?? null,
+            'ip'          => $request->ip(),
+            'created_at'  => now(),
         ]);
 
         return response()->json(['ok' => true]);
