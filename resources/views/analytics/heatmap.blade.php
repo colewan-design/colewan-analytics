@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', $site->name . ' — Heatmap — Alyze')
+@section('title', $site->name . ' — Heatmap — Alyse')
 
 @php $allSites = \App\Models\AnalyticsSite::orderBy('name')->get(); @endphp
 

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Boards — Alyze')
+@section('title', 'Boards — Alyse')
 
 @section('content')
 <div class="flex flex-col min-h-screen">

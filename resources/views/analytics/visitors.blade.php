@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', $site->name . ' — Visitors — Alyze')
+@section('title', $site->name . ' — Visitors — Alyse')
 
 @php $allSites = \App\Models\AnalyticsSite::orderBy('name')->get(); @endphp
 

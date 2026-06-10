@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Dashboard — Alyze')
+@section('title', 'Dashboard — Alyse')
 
 @section('content')
 <div class="p-8">

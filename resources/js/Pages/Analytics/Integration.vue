@@ -49,7 +49,7 @@ const copy = (id) => {
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                     <h2 class="font-semibold text-gray-900 mb-1 text-base">1. Analytics Tracker</h2>
                     <p class="text-sm text-gray-500 mb-4">Paste this snippet into the <code class="text-orange-500 bg-orange-50 px-1 py-0.5 rounded text-xs">&lt;head&gt;</code> of every page you want to track.</p>
-                    <pre id="tracker-snippet" class="bg-gray-950 rounded-xl p-4 text-xs text-emerald-400 overflow-x-auto whitespace-pre-wrap font-mono leading-relaxed"><code>&lt;!-- Alyze Analytics --&gt;
+                    <pre id="tracker-snippet" class="bg-gray-950 rounded-xl p-4 text-xs text-emerald-400 overflow-x-auto whitespace-pre-wrap font-mono leading-relaxed"><code>&lt;!-- Alyse Analytics --&gt;
 &lt;script&gt;
 window._analyticsId = '{{ site.tracking_id }}';
 window._analyticsUrl = '{{ appUrl }}';
@@ -62,7 +62,7 @@ window._analyticsUrl = '{{ appUrl }}';
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                     <h2 class="font-semibold text-gray-900 mb-1 text-base">2. Feedback Widget <span class="text-xs font-normal text-gray-400 ml-1">Optional</span></h2>
                     <p class="text-sm text-gray-500 mb-4">Add a floating satisfaction widget. Add this <strong>after</strong> the tracker script.</p>
-                    <pre id="feedback-snippet" class="bg-gray-950 rounded-xl p-4 text-xs text-emerald-400 overflow-x-auto whitespace-pre-wrap font-mono leading-relaxed"><code>&lt;!-- Alyze Feedback Widget --&gt;
+                    <pre id="feedback-snippet" class="bg-gray-950 rounded-xl p-4 text-xs text-emerald-400 overflow-x-auto whitespace-pre-wrap font-mono leading-relaxed"><code>&lt;!-- Alyse Feedback Widget --&gt;
 &lt;script src="{{ appUrl }}/feedback.js" defer&gt;&lt;/script&gt;</code></pre>
                     <button @click="copy('feedback-snippet')" class="mt-3 bg-orange-500 hover:bg-orange-600 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors">Copy to Clipboard</button>
                     <div class="mt-4 p-3 bg-gray-50 rounded-xl text-xs text-gray-500 flex items-start gap-2">

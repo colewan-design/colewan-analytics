@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', $site->name . ' — Alyze')
+@section('title', $site->name . ' — Alyse')
 
 @php
     $allSites = \App\Models\AnalyticsSite::orderBy('name')->get();
@@ -334,7 +334,7 @@
     <div class="bg-white rounded-2xl p-6 w-full max-w-2xl shadow-2xl border border-gray-100">
         <h2 class="text-lg font-bold mb-1">Embed Tracking Script</h2>
         <p class="text-sm text-gray-500 mb-4">Paste this snippet into the <code class="text-orange-500 bg-orange-50 px-1 py-0.5 rounded text-xs">&lt;head&gt;</code> of every page you want to track.</p>
-        <pre class="bg-gray-950 rounded-xl p-4 text-xs text-emerald-400 overflow-x-auto whitespace-pre-wrap font-mono leading-relaxed"><code>&lt;!-- Alyze Analytics --&gt;
+        <pre class="bg-gray-950 rounded-xl p-4 text-xs text-emerald-400 overflow-x-auto whitespace-pre-wrap font-mono leading-relaxed"><code>&lt;!-- Alyse Analytics --&gt;
 &lt;script&gt;
 window._analyticsId = '{{ $site->tracking_id }}';
 window._analyticsUrl = '{{ url('/') }}';
@@ -359,7 +359,7 @@ window._analyticsUrl = '{{ url('/') }}';
 
 @push('scripts')
 {{-- Data island: PHP encodes here so the JS block below stays pure JavaScript --}}
-<script type="application/json" id="alyze-data">{!! json_encode([
+<script type="application/json" id="Alyse-data">{!! json_encode([
     'labels'        => $chartData['labels'],
     'views'         => $chartData['data'],
     'browserLabels' => $browsers->pluck('browser'),
@@ -370,7 +370,7 @@ window._analyticsUrl = '{{ url('/') }}';
 
 <script>
 (function () {
-    const d = JSON.parse(document.getElementById('alyze-data').textContent);
+    const d = JSON.parse(document.getElementById('Alyse-data').textContent);
     const labels = d.labels;
     const data   = d.views;
 

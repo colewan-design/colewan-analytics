@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Alyze — Analytics')</title>
+    <title>@yield('title', 'Alyse — Analytics')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -44,7 +44,7 @@
                     <rect x="17" y="3" width="4" height="18" rx="1.5"/>
                 </svg>
             </div>
-            <span class="font-bold text-xl tracking-tight text-gray-900">Alyze</span>
+            <span class="font-bold text-xl tracking-tight text-gray-900">Alyse</span>
         </a>
     </div>
 

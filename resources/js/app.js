@@ -4,7 +4,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
 import '../css/app.css'
 
 createInertiaApp({
-    title: (title) => title ? `${title} — Alyze` : 'Alyze — Analytics',
+    title: (title) => title ? `${title} — Alyse` : 'Alyse — Analytics',
     resolve: (name) =>
         resolvePageComponent(
             `./Pages/${name}.vue`,

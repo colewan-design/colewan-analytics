@@ -52,7 +52,7 @@ const mobileOpen = ref(false)
                             <rect x="17" y="3" width="4" height="18" rx="1.5"/>
                         </svg>
                     </div>
-                    <span class="font-bold text-xl tracking-tight text-gray-900">Alyze</span>
+                    <span class="font-bold text-xl tracking-tight text-gray-900">Alyse</span>
                 </Link>
                 <button @click="mobileOpen = false" class="md:hidden p-1.5 rounded-lg hover:bg-gray-100 transition-colors text-gray-400">
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
@@ -176,7 +176,7 @@ const mobileOpen = ref(false)
                             <rect x="17" y="3" width="4" height="18" rx="1.5"/>
                         </svg>
                     </div>
-                    <span class="font-bold text-lg tracking-tight text-gray-900">Alyze</span>
+                    <span class="font-bold text-lg tracking-tight text-gray-900">Alyse</span>
                 </Link>
                 <div class="w-9"></div>
             </div>

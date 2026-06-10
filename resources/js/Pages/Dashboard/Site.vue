@@ -361,7 +361,7 @@ onMounted(() => {
                 <div class="bg-white rounded-2xl p-6 w-full max-w-2xl shadow-2xl border border-gray-100">
                     <h2 class="text-lg font-bold mb-1">Embed Tracking Script</h2>
                     <p class="text-sm text-gray-500 mb-4">Paste this snippet into the <code class="text-orange-500 bg-orange-50 px-1 py-0.5 rounded text-xs">&lt;head&gt;</code> of every page you want to track.</p>
-                    <pre class="bg-gray-950 rounded-xl p-4 text-xs text-emerald-400 overflow-x-auto whitespace-pre-wrap font-mono leading-relaxed"><code id="embed-code">&lt;!-- Alyze Analytics --&gt;
+                    <pre class="bg-gray-950 rounded-xl p-4 text-xs text-emerald-400 overflow-x-auto whitespace-pre-wrap font-mono leading-relaxed"><code id="embed-code">&lt;!-- Alyse Analytics --&gt;
 &lt;script&gt;
 window._analyticsId = '{{ site.tracking_id }}';
 window._analyticsUrl = '{{ $page.props.appUrl }}';
