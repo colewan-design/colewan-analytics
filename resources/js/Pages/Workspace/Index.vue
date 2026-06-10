@@ -30,7 +30,7 @@ const deleteSite = () => {
     <AppLayout>
         <div class="flex flex-col min-h-screen">
 
-            <header class="flex items-center justify-between px-8 py-5 bg-white border-b border-gray-100 gap-4 flex-wrap">
+            <header class="flex items-center justify-between px-4 py-4 md:px-8 md:py-5 bg-white border-b border-gray-100 gap-3 flex-wrap">
                 <div class="flex items-center gap-2 text-sm font-medium text-gray-500">
                     <Link href="/" class="hover:text-gray-800 transition-colors">Dashboard</Link>
                     <span class="text-gray-300">/</span>
@@ -40,7 +40,7 @@ const deleteSite = () => {
                 </div>
             </header>
 
-            <div class="flex-1 p-8 space-y-6 max-w-2xl">
+            <div class="flex-1 p-4 md:p-8 space-y-6 max-w-2xl">
 
                 <!-- Settings form -->
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">

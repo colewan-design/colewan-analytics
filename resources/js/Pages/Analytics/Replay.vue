@@ -31,7 +31,7 @@ const setRange = (d) => router.get(`/sites/${props.site.tracking_id}/replay`, { 
     <AppLayout>
         <div class="flex flex-col min-h-screen">
 
-            <header class="flex items-center justify-between px-8 py-5 bg-white border-b border-gray-100 gap-4 flex-wrap">
+            <header class="flex items-center justify-between px-4 py-4 md:px-8 md:py-5 bg-white border-b border-gray-100 gap-3 flex-wrap">
                 <div class="flex items-center gap-2 text-sm font-medium text-gray-500">
                     <Link href="/" class="hover:text-gray-800 transition-colors">Dashboard</Link>
                     <span class="text-gray-300">/</span>
@@ -47,10 +47,10 @@ const setRange = (d) => router.get(`/sites/${props.site.tracking_id}/replay`, { 
                 </div>
             </header>
 
-            <div class="flex-1 p-8">
-                <div class="mb-4 flex items-center justify-between">
+            <div class="flex-1 p-4 md:p-8">
+                <div class="mb-4 flex items-center justify-between gap-2">
                     <p class="text-sm text-gray-500"><span class="font-semibold text-gray-900">{{ sessions.total }}</span> sessions in the last {{ range }}d</p>
-                    <p class="text-xs text-gray-400">Click a session to expand its page journey</p>
+                    <p class="text-xs text-gray-400 hidden sm:block">Click a session to expand its page journey</p>
                 </div>
 
                 <div v-if="!sessions.data.length" class="flex flex-col items-center justify-center py-24 text-center bg-white rounded-2xl border border-gray-100">
@@ -61,12 +61,13 @@ const setRange = (d) => router.get(`/sites/${props.site.tracking_id}/replay`, { 
                 </div>
 
                 <div v-else class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="overflow-x-auto">
                     <!-- Header row -->
-                    <div class="grid text-xs font-semibold text-gray-400 uppercase tracking-wider px-5 py-3 border-b border-gray-100" style="grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 0.5fr">
+                    <div class="grid text-xs font-semibold text-gray-400 uppercase tracking-wider px-5 py-3 border-b border-gray-100 min-w-[640px]" style="grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 0.5fr">
                         <span>Session</span><span>Country</span><span>Browser</span><span>Device</span><span>Pages</span><span>Duration</span><span></span>
                     </div>
 
-                    <div v-for="s in sessions.data" :key="s.session_id" class="border-b border-gray-50 last:border-b-0">
+                    <div v-for="s in sessions.data" :key="s.session_id" class="border-b border-gray-50 last:border-b-0 min-w-[640px]">
                         <!-- Session row -->
                         <button @click="toggle(s.session_id)"
                             class="w-full grid items-center px-5 py-3.5 hover:bg-gray-50/60 transition-colors text-left"
@@ -107,6 +108,7 @@ const setRange = (d) => router.get(`/sites/${props.site.tracking_id}/replay`, { 
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 

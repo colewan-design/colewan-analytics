@@ -28,7 +28,7 @@ const sparkPath = (sparkline) => {
     <AppLayout>
         <div class="flex flex-col min-h-screen">
 
-            <header class="flex items-center justify-between px-8 py-5 bg-white border-b border-gray-100">
+            <header class="flex items-center justify-between px-4 py-4 md:px-8 md:py-5 bg-white border-b border-gray-100">
                 <div>
                     <h1 class="text-lg font-bold text-gray-900">Boards</h1>
                     <p class="text-sm text-gray-400 mt-0.5">7-day overview across all your sites</p>
@@ -39,7 +39,7 @@ const sparkPath = (sparkline) => {
                 </Link>
             </header>
 
-            <div class="flex-1 p-8">
+            <div class="flex-1 p-4 md:p-8">
                 <div v-if="!sites.length" class="flex flex-col items-center justify-center py-24 text-center">
                     <div class="w-14 h-14 bg-orange-50 rounded-2xl flex items-center justify-center mb-4">
                         <svg class="w-7 h-7 text-orange-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 3h18v14H3z"/><path d="M7 17v2M17 17v2"/></svg>
@@ -50,7 +50,7 @@ const sparkPath = (sparkline) => {
 
                 <template v-else>
                     <!-- Summary row -->
-                    <div class="grid grid-cols-3 gap-4 mb-8">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                         <div v-for="[label, val, path] in [
                             ['Total Views',    totalViews().toLocaleString(),    'M3 3h18v14H3z M7 9l3 3 3-3 4 4'],
                             ['Total Visitors', totalVisitors().toLocaleString(), 'M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2 M9 7a4 4 0 100 8 4 4 0 000-8z'],

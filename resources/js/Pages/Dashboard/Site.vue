@@ -108,17 +108,17 @@ onMounted(() => {
         <div class="flex flex-col min-h-screen">
 
             <!-- Top bar -->
-            <header class="flex items-center justify-between px-8 py-5 bg-white border-b border-gray-100 gap-4 flex-wrap">
-                <div class="flex items-center gap-2 text-sm font-medium text-gray-500">
-                    <Link href="/" class="hover:text-gray-800 transition-colors">Dashboard</Link>
+            <header class="flex items-center justify-between px-4 py-4 md:px-8 md:py-5 bg-white border-b border-gray-100 gap-3 flex-wrap">
+                <div class="flex items-center gap-2 text-sm font-medium text-gray-500 min-w-0">
+                    <Link href="/" class="hover:text-gray-800 transition-colors shrink-0">Dashboard</Link>
                     <span class="text-gray-300">/</span>
                     <SitePicker :site="site" route-base="" />
                 </div>
 
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2 flex-wrap">
                     <div class="flex items-center bg-gray-100 rounded-xl p-1 gap-0.5">
                         <button v-for="d in [7,14,30,60,90]" :key="d" @click="setRange(d)"
-                            :class="['px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors', range == d ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700']">
+                            :class="['px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-colors', range == d ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700']">
                             {{ d }}d
                         </button>
                     </div>
@@ -137,7 +137,7 @@ onMounted(() => {
             </header>
 
             <!-- Body -->
-            <div class="flex-1 p-8 space-y-6">
+            <div class="flex-1 p-4 md:p-8 space-y-6">
 
                 <!-- Live banner -->
                 <div class="flex items-center gap-3">

@@ -21,7 +21,7 @@ const submit = () => form.post('/sites', {
     <Head title="Dashboard" />
 
     <AppLayout>
-        <div class="p-8">
+        <div class="p-4 md:p-8">
 
             <!-- Flash (inline fallback) -->
             <div v-if="flash?.success" class="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl text-sm">
@@ -29,7 +29,7 @@ const submit = () => form.post('/sites', {
             </div>
 
             <!-- Header -->
-            <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center justify-between gap-3 mb-8">
                 <div>
                     <p class="text-sm text-gray-400 font-medium mb-1">Overview</p>
                     <h1 class="text-2xl font-bold text-gray-900">Your Sites</h1>
