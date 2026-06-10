@@ -6,6 +6,7 @@ use App\Models\AnalyticsClick;
 use App\Models\AnalyticsPageview;
 use App\Models\AnalyticsSite;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class BoardsController extends Controller
 {
@@ -27,10 +28,7 @@ class BoardsController extends Controller
             $sparkMap = AnalyticsPageview::where('tracking_id', $tid)
                 ->where('created_at', '>=', $since)
                 ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as cnt'))
-                ->groupBy('date')
-                ->get()
-                ->pluck('cnt', 'date')
-                ->toArray();
+                ->groupBy('date')->get()->pluck('cnt', 'date')->toArray();
 
             $sparkline = [];
             for ($i = 6; $i >= 0; $i--) {
@@ -40,7 +38,6 @@ class BoardsController extends Controller
 
             $stats[$site->id] = [
                 'views'     => $views,
-                'prevViews' => $prevViews,
                 'visitors'  => $visitors,
                 'clicks'    => $clicks,
                 'sparkline' => $sparkline,
@@ -48,6 +45,9 @@ class BoardsController extends Controller
             ];
         }
 
-        return view('boards.index', compact('sites', 'stats'));
+        return Inertia::render('Boards/Index', [
+            'sites' => $sites,
+            'stats' => $stats,
+        ]);
     }
 }
