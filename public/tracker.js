@@ -59,20 +59,7 @@
 
     pageStartTime = Date.now();
 
-    send('track/pageview', {
-      tracking_id: id,
-      session_id:  getSession(),
-      url:         location.href,
-      title:       document.title || null,
-      referrer:    document.referrer || null,
-      screen_w:    screen.width,
-      screen_h:    screen.height,
-      language:    navigator.language || null,
-    });
-
-    // Retrieve view_id from response to use when sending duration
-    var url = api + '/api/track/pageview';
-    fetch(url, {
+    fetch(api + '/api/track/pageview', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({
@@ -135,26 +122,7 @@
 
   // ---------- Init ----------
   function init() {
-    pageStartTime = Date.now();
-
-    var url = api + '/api/track/pageview';
-    fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({
-        tracking_id: id,
-        session_id:  getSession(),
-        url:         location.href,
-        title:       document.title || null,
-        referrer:    document.referrer || null,
-        screen_w:    screen.width,
-        screen_h:    screen.height,
-        language:    navigator.language || null,
-      }),
-      keepalive: true,
-    }).then(function (res) { return res.json(); })
-      .then(function (data) { if (data.view_id) currentViewId = data.view_id; })
-      .catch(function () {});
+    trackPageview();
   }
 
   if (document.readyState === 'loading') {
