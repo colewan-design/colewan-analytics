@@ -31,7 +31,12 @@ class TrackingController extends Controller
             return response()->json(['error' => 'Invalid tracking ID'], 403);
         }
 
-        $ip    = $request->ip();
+        $ip = $request->ip();
+
+        if ($this->isLocalhost($ip, $data['url'])) {
+            return response()->json(['ok' => true]);
+        }
+
         $geo   = $this->geoip($ip);
         $ua    = $this->parseUserAgent($request->userAgent());
         $viewId = (string) Str::uuid();
@@ -94,6 +99,10 @@ class TrackingController extends Controller
             return response()->json(['error' => 'Invalid tracking ID'], 403);
         }
 
+        if ($this->isLocalhost($request->ip(), $data['page_url'])) {
+            return response()->json(['ok' => true]);
+        }
+
         AnalyticsClick::create([
             'tracking_id'   => $data['tracking_id'],
             'session_id'    => $data['session_id'],
@@ -125,6 +134,10 @@ class TrackingController extends Controller
             return response()->json(['error' => 'Invalid tracking ID'], 403);
         }
 
+        if ($this->isLocalhost($request->ip(), $data['page_url'])) {
+            return response()->json(['ok' => true]);
+        }
+
         AnalyticsFeedback::create([
             'tracking_id' => $data['tracking_id'],
             'session_id'  => $data['session_id'] ?? null,
@@ -138,12 +151,19 @@ class TrackingController extends Controller
         return response()->json(['ok' => true]);
     }
 
-    private function geoip(string $ip): array
+    private function isLocalhost(string $ip, string $url): bool
     {
-        if (in_array($ip, ['127.0.0.1', '::1', 'localhost'])) {
-            return ['country' => 'Local', 'country_code' => 'LO', 'city' => 'Local', 'region' => ''];
+        if (in_array($ip, ['127.0.0.1', '::1'])) {
+            return true;
         }
 
+        $host = parse_url($url, PHP_URL_HOST);
+        return in_array($host, ['localhost', '127.0.0.1', '::1'])
+            || preg_match('/^localhost(:\d+)?$/', $host ?? '');
+    }
+
+    private function geoip(string $ip): array
+    {
         return Cache::remember("geoip:{$ip}", 86400, function () use ($ip) {
             try {
                 $res = Http::timeout(3)->get("http://ip-api.com/json/{$ip}?fields=country,countryCode,city,regionName");
